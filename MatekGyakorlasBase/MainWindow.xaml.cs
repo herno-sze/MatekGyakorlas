@@ -1,20 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-
-
+using System.Text.RegularExpressions;
+using System.Linq;
 
 namespace MatekGyakorlas
 {
@@ -24,7 +15,8 @@ namespace MatekGyakorlas
         char Operator = '+';
         string Name = "";
         int EqNum = 10;
-        int EqCorrect = 0;
+        int MaxResult = 100;
+        bool[] EqCorrect;
         int[] Results;
         Equation[] Equations;
         TextBox[] TxResults;
@@ -43,7 +35,7 @@ namespace MatekGyakorlas
                 TabMain.SelectedIndex = 1;
             try
             {
-                ResultsFromFile.Text = File.ReadAllText(@"eredmeny.txt");             
+                ResultsFromFile.Text = File.ReadAllText(@"eredmeny.txt");
             }
             catch
             {
@@ -114,7 +106,7 @@ namespace MatekGyakorlas
             EqColumn1.Children.Clear();
             EqColumn2.Children.Clear();
             EqColumn3.Children.Clear();
-            EqCorrect = 0;
+            EqCorrect = new bool[EqNum];
             LabelStatus.Background = Brushes.DarkMagenta;
             Equations = new Equation[EqNum];
             Results = new int[EqNum];
@@ -127,12 +119,13 @@ namespace MatekGyakorlas
                 TxResults[i] = new TextBox();
                 s.Orientation = Orientation.Horizontal;
                 TxResults[i].Width = 80;
-                l.Content = Equations[i].NewEquation(2, '+');
+                l.Content = Equations[i].NewEquation(ParameterNum, Operator, MaxResult);
                 Results[i] = Equations[i].Result;
                 s.Children.Add(l);
                 s.Margin = new Thickness(5);
                 s.Children.Add(TxResults[i]);
-                TxResults[i].KeyUp += TxRestult_KeyUp;
+                TxResults[i].TextChanged += MainWindow_TextChanged;
+                TxResults[i].PreviewTextInput += NumberValidationTextBox;
                 if (i >= 0 && i <= 4)
                     EqColumn1.Children.Add(s);
                 else if (i >= 5 && i <= 9)
@@ -143,7 +136,7 @@ namespace MatekGyakorlas
             TxResults[0].Focus();
         }
 
-        void TxRestult_KeyUp(object sender, KeyEventArgs e)
+        private void MainWindow_TextChanged(object sender, TextChangedEventArgs e)
         {
             int CurrentEq = 0;
             TextBox t = (TextBox)sender;
@@ -154,18 +147,20 @@ namespace MatekGyakorlas
             {
                 if (Results[CurrentEq] == Int32.Parse(t.Text))
                 {
-                    EqCorrect++;
+                    EqCorrect[CurrentEq] = true;
                     t.Background = Brushes.MediumSeaGreen;
                     t.Foreground = Brushes.White;
                 }
                 else
                 {
+                    EqCorrect[CurrentEq] = false;
                     t.Background = Brushes.Firebrick;
                     t.Foreground = Brushes.White;
                 }
             }
             catch { }
-            if (EqCorrect == EqNum)
+            int EqCorrectNum = EqCorrect.Where(c => c).Count();
+            if (EqCorrectNum == EqNum)
             {
                 LabelStatus.Background = Brushes.MediumSeaGreen;
                 MessageBox.Show("Gartulálok " + Name + "!\nSzép eredmény!");
@@ -173,7 +168,8 @@ namespace MatekGyakorlas
                 try
                 {
                     string content = File.ReadAllText(fileName);
-                    content = DateTime.Now.ToString("yyyy.MM.dd HH:mm ") + Name + " eredménye " + EqNum + "/" + EqCorrect + "\n" + content;
+                    int EqCorrectNumber = EqCorrect.Where(c => c).Count();
+                    content = DateTime.Now.ToString("yyyy.MM.dd HH:mm ") + Name + " eredménye " + EqNum + "/" + EqCorrectNumber + "\n" + content;
                     File.WriteAllText(fileName, content);
                     ResultsFromFile.Text = content;
                 }
@@ -185,7 +181,16 @@ namespace MatekGyakorlas
 
                 NewGame();
             }
-            LabelStatus.Content = "Aktuális eredményed: " + EqNum + "/" + EqCorrect;
+            LabelStatus.Content = "Aktuális eredményed: " + EqNum + "/" + EqCorrectNum;
+        }
+
+        /// <summary>
+        /// Validates the textbox to contain only numbers 
+        /// </summary>
+        private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex("^[a-zA-Z]*$"); //Regex("[^0-9]+");
+            e.Handled = regex.IsMatch(e.Text);
         }
 
         private void TxtNev_TextChanged(object sender, TextChangedEventArgs e)
@@ -213,5 +218,52 @@ namespace MatekGyakorlas
             Name = TxtNev.Text;
             LabelStatus.Content = "Üdvözöllek " + Name + "!";
         }
+
+
+
+        private void ButtonOperator_Click(object sender, RoutedEventArgs e)
+        {
+            if ((Button)sender == ButtonDivide)
+            {
+                ButtonDivide.Background = Brushes.MediumSeaGreen;
+                ButtonPlus.Background = ButtonMultiply.Background = ButtonMinus.Background = Brushes.Gray;
+                Operator = '%';
+            }
+            else if (sender == ButtonPlus)
+            {
+                ButtonPlus.Background = Brushes.MediumSeaGreen;
+                ButtonDivide.Background = ButtonMultiply.Background = ButtonMinus.Background = Brushes.Gray;
+                Operator = '+';
+            }
+            else if (sender == ButtonMinus)
+            {
+                ButtonMinus.Background = Brushes.MediumSeaGreen;
+                ButtonDivide.Background = ButtonMultiply.Background = ButtonPlus.Background = Brushes.Gray;
+                Operator = '-';
+            }
+            else
+            {
+                ButtonMultiply.Background = Brushes.MediumSeaGreen;
+                ButtonDivide.Background = ButtonMinus.Background = ButtonPlus.Background = Brushes.Gray;
+                Operator = '*';
+            }
+        }
+        private void txtMaxResult_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            try {
+                MaxResult = Int32.Parse(txtMaxResult.Text);
+            }
+            catch { }
+        }
+
+        private void SliderParameter_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            try {
+                ParameterNum = (int)SliderParameter.Value;
+                LabelParameter.Content = SliderParameter.Value.ToString();
+            }
+            catch { }
+        }
     }
 }
+

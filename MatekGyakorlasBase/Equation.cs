@@ -30,7 +30,7 @@ namespace MatekGyakorlas
             return randomWrapper.Value;
         }
 
-        public string NewEquation(int Size, char Operator)
+        public string NewEquation(int Size, char Operator, int MaxResult)
         {
             this.Operator = Operator;
             this.Size = Size;
@@ -39,7 +39,7 @@ namespace MatekGyakorlas
             Result = 0;
             for (int i = 0; i < Size; i++)
             {
-                Constants[i] = random.Next(99) + 1;
+                Constants[i] = random.Next(MaxResult-1) + 1;
 
                 switch (Operator)
                 {
@@ -49,7 +49,19 @@ namespace MatekGyakorlas
                         else
                             Result -= Constants[i];
                         break;
-                    default:
+                    case '*':
+                        if (i == 0)
+                            Result += Constants[i];
+                        else
+                            Result *= Constants[i];
+                        break;
+                    case '%':
+                        if (i == 0)
+                            Result += Constants[i];
+                        else
+                            Result /= Constants[i];
+                        break;
+                    default: //összeadás
                         Result += Constants[i];
                         break;
                 }

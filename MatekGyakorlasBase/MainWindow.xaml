@@ -62,19 +62,36 @@
                     </ScrollViewer>
                 </TabItem>
 
-                <TabItem Name="TabBeallitasok" Header="Beállítások" FontSize="30">
+                <TabItem Name="TabBeallitasok" Header="Beállítások" FontSize="20">
                     <TabItem.Content>
                         <ScrollViewer VerticalScrollBarVisibility="Auto">
-                            <StackPanel>
-                                <Label FontSize="22" Content="Beállítások" />
-                                <!--Value="{Binding MyPossibleOpt}"-->
-                                <Slider x:Name="SliderPossOpt" Margin="20" Minimum="3" Maximum="15" TickPlacement="BottomRight" TickFrequency="1" IsSnapToTickEnabled="True" ValueChanged="SliderPossOpt_ValueChanged" />
+                            <StackPanel >
+                                <Label FontSize="22" Content="Beállítások" Background="DarkMagenta" Foreground="WhiteSmoke" />
                                 <StackPanel Orientation="Horizontal">
-                                    <Label Content="Egyenletek:" Margin="20" />
-                                    <Label x:Name="LabelPossibleOpt" Content="4" Margin="20" />
+                                    <Label Content="Legnagyobb paraméter:"  />
+                                    <TextBox x:Name="txtMaxResult" Text="100" MinWidth="120" VerticalAlignment="Center" TextAlignment="Center"  PreviewTextInput="NumberValidationTextBox" TextChanged="txtMaxResult_TextChanged"/>
                                 </StackPanel>
-                                <Button x:Name="ButtonGoMain" Click="ButtonGoToGame_Click" Margin="20" Content="Vissza a játéhoz" />
-                                <Button Click="MenuItem_NewGame_Click" Margin="20" Content="Új játék" />
+                                <!--Value="{Binding MyPossibleOpt}"-->
+                                <StackPanel Orientation="Horizontal">
+                                    <Label Content="Egyenletek:  " />
+                                    <Slider x:Name="SliderPossOpt" Margin="5" Minimum="3" Maximum="15" TickPlacement="BottomRight" TickFrequency="1" IsSnapToTickEnabled="True" MinWidth="180" ValueChanged="SliderPossOpt_ValueChanged" />
+                                    <Label x:Name="LabelPossibleOpt" Content="4" Margin="5" />
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <Label Content="Paraméterek száma:  " />
+                                    <Slider x:Name="SliderParameter" Margin="5" Minimum="2" Maximum="4" TickPlacement="BottomRight" TickFrequency="1" IsSnapToTickEnabled="True" MinWidth="180" ValueChanged="SliderParameter_ValueChanged" />
+                                    <Label x:Name="LabelParameter" Content="2" Margin="5" />
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <Button FontSize="40" FontWeight="Bold" Content="+" Click="ButtonOperator_Click" x:Name="ButtonPlus" Padding="20,0,20,0" Margin="10,5,5,5" Background="MediumSeaGreen" Foreground="WhiteSmoke" />
+                                    <Button FontSize="40" FontWeight="Bold" Content="-" Click="ButtonOperator_Click" x:Name="ButtonMinus" Padding="20,0,20,0" Margin="5" Background="Gray" Foreground="WhiteSmoke" />
+                                    <Button FontSize="40" FontWeight="Bold" Content="x" Click="ButtonOperator_Click" x:Name="ButtonMultiply" Padding="20,0,20,0" Margin="5" Background="Gray" Foreground="WhiteSmoke" />
+                                    <Button FontSize="40" FontWeight="Bold" Content="%" Click="ButtonOperator_Click" x:Name="ButtonDivide" Padding="20,0,20,0" Margin="5" Background="Gray" Foreground="WhiteSmoke" />
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <Button x:Name="ButtonGoMain" Click="ButtonGoToGame_Click"  Content="Vissza a játéhoz" Padding="10" Margin="10"/>
+                                    <Button Click="MenuItem_NewGame_Click" Content="Új játék" Padding="10" Margin="10" />
+                                </StackPanel>
                             </StackPanel>
                         </ScrollViewer>
                     </TabItem.Content>
