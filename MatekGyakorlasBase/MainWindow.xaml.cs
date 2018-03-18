@@ -20,6 +20,7 @@ namespace MatekGyakorlas
         int[] Results;
         Equation[] Equations;
         TextBox[] TxResults;
+        string Version = "v1.1";
 
 
         public MainWindow()
@@ -29,6 +30,7 @@ namespace MatekGyakorlas
             TabBeallitasok.Visibility = Visibility.Collapsed;
             TabEredmenyek.Visibility = Visibility.Collapsed;
             TabStart.Visibility = Visibility.Collapsed;
+            LabelVer.Content = "Programverzió: " + Version;
             if (Name.Equals(""))
                 TabMain.SelectedIndex = 0;
             else
@@ -93,7 +95,7 @@ namespace MatekGyakorlas
 
         private void MenuItem_Credits(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("\u00a9 Horváthné Fejes Katalin \nachat.hu/suli");
+            MessageBox.Show("\u00a9 Horváthné Fejes Katalin \nachat.hu/suli \n " + Version);
         }
 
         private void MenuItem_Tipps(object sender, RoutedEventArgs e)
@@ -250,7 +252,8 @@ namespace MatekGyakorlas
         }
         private void txtMaxResult_TextChanged(object sender, TextChangedEventArgs e)
         {
-            try {
+            try
+            {
                 MaxResult = Int32.Parse(txtMaxResult.Text);
             }
             catch { }
@@ -258,7 +261,8 @@ namespace MatekGyakorlas
 
         private void SliderParameter_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            try {
+            try
+            {
                 ParameterNum = (int)SliderParameter.Value;
                 LabelParameter.Content = SliderParameter.Value.ToString();
             }
