@@ -1,7 +1,7 @@
 ﻿<Window x:Class="MatekGyakorlas.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Műveletek gyakrlás" Height="400" Width="880" MinHeight="300" MinWidth="600" Closed="Window_Closed_1">
+        Title="Műveletek gyakorlás" Height="400" Width="880" MinHeight="300" MinWidth="600" Closed="Window_Closed_1">
     <DockPanel>
         <DockPanel>
             <TabControl x:Name="TabMain" TabStripPlacement="Top" BorderThickness="0" Padding="0"  >
@@ -11,6 +11,7 @@
                             <Label HorizontalAlignment="Center" Padding="10">Kérlek írd ide a neved:</Label>
                             <TextBox x:Name="TxtNev" Width="200" TextAlignment="Center" TextChanged="TxtNev_TextChanged" KeyUp="TxtNev_KeyUp"></TextBox>
                             <Button x:Name="ButtonNevOk" Padding="2" Margin="20" Width="200" Visibility="Hidden" Click="ButtonNevOk_Click">Ok</Button>
+                            <Label x:Name="LabelVer" HorizontalAlignment="Center" Padding="10" Content="Jelenlegi verzió" FontSize="18" Opacity="0.5" />
                         </StackPanel>
                     </TabItem.Content>
                 </TabItem>
