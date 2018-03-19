@@ -20,7 +20,7 @@ namespace MatekGyakorlas
         int[] Results;
         Equation[] Equations;
         TextBox[] TxResults;
-        string Version = "v1.1";
+        string Version = "v1.1.1";
 
 
         public MainWindow()
@@ -229,7 +229,7 @@ namespace MatekGyakorlas
             {
                 ButtonDivide.Background = Brushes.MediumSeaGreen;
                 ButtonPlus.Background = ButtonMultiply.Background = ButtonMinus.Background = Brushes.Gray;
-                Operator = '%';
+                Operator = '/';
             }
             else if (sender == ButtonPlus)
             {
