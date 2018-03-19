@@ -72,7 +72,7 @@ namespace MatekGyakorlas
                         //else
                         //    Result *= Constants[i];
                         break;
-                    case '%':
+                    case '/':
                         if (i == 0)
                         {
                             a = random.Next(10 - 2) + 2; // 2..9

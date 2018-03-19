@@ -70,7 +70,7 @@
                                 <Label FontSize="22" Content="Beállítások" Background="DarkMagenta" Foreground="WhiteSmoke" />
                                 <StackPanel Orientation="Horizontal">
                                     <Label Content="Legnagyobb paraméter:"  />
-                                    <TextBox x:Name="txtMaxResult" Text="100" MinWidth="120" VerticalAlignment="Center" TextAlignment="Center"  PreviewTextInput="NumberValidationTextBox" TextChanged="txtMaxResult_TextChanged"/>
+                                    <TextBox x:Name="txtMaxResult" Text="1000" MinWidth="120" VerticalAlignment="Center" TextAlignment="Center"  PreviewTextInput="NumberValidationTextBox" TextChanged="txtMaxResult_TextChanged"/>
                                 </StackPanel>
                                 <!--Value="{Binding MyPossibleOpt}"-->
                                 <StackPanel Orientation="Horizontal">
@@ -87,7 +87,7 @@
                                     <Button FontSize="40" FontWeight="Bold" Content="+" Click="ButtonOperator_Click" x:Name="ButtonPlus" Padding="20,0,20,0" Margin="10,5,5,5" Background="MediumSeaGreen" Foreground="WhiteSmoke" />
                                     <Button FontSize="40" FontWeight="Bold" Content="-" Click="ButtonOperator_Click" x:Name="ButtonMinus" Padding="20,0,20,0" Margin="5" Background="Gray" Foreground="WhiteSmoke" />
                                     <Button FontSize="40" FontWeight="Bold" Content="x" Click="ButtonOperator_Click" x:Name="ButtonMultiply" Padding="20,0,20,0" Margin="5" Background="Gray" Foreground="WhiteSmoke" />
-                                    <Button FontSize="40" FontWeight="Bold" Content="%" Click="ButtonOperator_Click" x:Name="ButtonDivide" Padding="20,0,20,0" Margin="5" Background="Gray" Foreground="WhiteSmoke" />
+                                    <Button FontSize="40" FontWeight="Bold" Content="/" Click="ButtonOperator_Click" x:Name="ButtonDivide" Padding="20,0,20,0" Margin="5" Background="Gray" Foreground="WhiteSmoke" />
                                 </StackPanel>
                                 <StackPanel Orientation="Horizontal">
                                     <Button x:Name="ButtonGoMain" Click="ButtonGoToGame_Click"  Content="Vissza a játéhoz" Padding="10" Margin="10"/>
